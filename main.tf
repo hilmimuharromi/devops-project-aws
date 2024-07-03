@@ -56,7 +56,7 @@ resource "aws_instance" "webserver-instance" {
   instance_type   = var.ubuntu-instance-type
   key_name        = aws_key_pair.deployer.key_name
   vpc_security_group_ids = [aws_security_group.network-security-group.id]
-    user_data              = templatefile("./install_jenkins.sh", {})
+    user_data              = templatefile("./setup_web_server.sh", {})
 
   tags = {
     Name = "app-server"
