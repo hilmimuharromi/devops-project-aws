@@ -49,6 +49,9 @@
       notify:
         - restart nginx
 
+  - name: Checking status server
+      shell: echo "setup finsihed"
+
 handlers:
   - name: restart nginx
     service: name=nginx state=reloaded
