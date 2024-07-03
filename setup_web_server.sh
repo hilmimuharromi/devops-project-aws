@@ -10,4 +10,4 @@ mkdir setup-server && cd setup-server
 pwd
 git clone https://github.com/hilmimuharromi/devops-project-aws.git
 cd devops-project-aws/ansible
-ansible-playbook -i localhost Jenkins.yml
+ansible-playbook -i localhost web_server.yml

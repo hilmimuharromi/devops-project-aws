@@ -38,7 +38,7 @@ resource "aws_security_group" "network-security-group" {
 
 
 # Creating Ubuntu EC2 instance
-resource "aws_instance" "ubuntu-vm-instance" {
+resource "aws_instance" "jenkins-instance" {
   ami             = var.ubuntu-ami
   instance_type   = var.ubuntu-instance-type
   key_name        = aws_key_pair.deployer.key_name
@@ -46,6 +46,19 @@ resource "aws_instance" "ubuntu-vm-instance" {
     user_data              = templatefile("./install_jenkins.sh", {})
 
   tags = {
-    Name = "jenkins-vm"
+    Name = "jenkins-server"
+  } 
+}
+
+# Creating Ubuntu EC2 instance
+resource "aws_instance" "webserver-instance" {
+  ami             = var.ubuntu-ami
+  instance_type   = var.ubuntu-instance-type
+  key_name        = aws_key_pair.deployer.key_name
+  vpc_security_group_ids = [aws_security_group.network-security-group.id]
+    user_data              = templatefile("./install_jenkins.sh", {})
+
+  tags = {
+    Name = "app-server"
   } 
 }
