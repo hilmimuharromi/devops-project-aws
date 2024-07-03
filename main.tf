@@ -32,7 +32,7 @@ resource "aws_security_group" "network-security-group" {
   }
 
   tags = {
-    Name = "Jenkins-sg"
+    Name = "miro-network-all"
   }
 }
 
