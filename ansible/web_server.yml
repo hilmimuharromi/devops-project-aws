@@ -39,3 +39,16 @@
       apt:
         name: postgresql
         state: present
+
+  - name: update
+      apt: update_cache=yes   
+   
+  - name: Install Nginx
+      apt: name=nginx state=latest
+
+      notify:
+        - restart nginx
+
+handlers:
+  - name: restart nginx
+    service: name=nginx state=reloaded
