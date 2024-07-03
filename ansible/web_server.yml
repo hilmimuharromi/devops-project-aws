@@ -10,7 +10,6 @@
       name: "*"
       state: latest
 
-
   - name: Install fontconfig
     shell: apt install fontconfig -y    
 
@@ -52,6 +51,6 @@
   - name: Checking status server
     shell: echo "setup finsihed"
 
-handlers:
+  handlers:
   - name: restart nginx
     service: name=nginx state=reloaded
