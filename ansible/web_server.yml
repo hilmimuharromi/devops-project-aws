@@ -21,36 +21,36 @@
     shell: java -version  
 
   - name: Add pgdg repo to sources.list.d
-      lineinfile:
-        path: /etc/apt/sources.list.d/pgdg.list
-        line: "deb http://apt.postgresql.org/pub/repos/apt {{ ansible_distribution_release }}-pgdg main"
-        create: true
+    lineinfile:
+      path: /etc/apt/sources.list.d/pgdg.list
+      line: "deb http://apt.postgresql.org/pub/repos/apt {{ ansible_distribution_release }}-pgdg main"
+      create: true
   
   - name: Download PostgreSQL key and add it to system keyring
-      apt_key:
-        url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
-        state: present
+    apt_key:
+      url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+      state: present
   
   - name: Update apt cache
-      apt:
-        update_cache: yes
+    apt:
+      update_cache: yes
 
   - name: Install PostgreSQL
-      apt:
-        name: postgresql
-        state: present
+    apt:
+      name: postgresql
+      state: present
 
   - name: update
-      apt: update_cache=yes   
+    apt: update_cache=yes   
    
   - name: Install Nginx
-      apt: name=nginx state=latest
+    apt: name=nginx state=latest
 
-      notify:
-        - restart nginx
+    notify:
+      - restart nginx
 
   - name: Checking status server
-      shell: echo "setup finsihed"
+    shell: echo "setup finsihed"
 
 handlers:
   - name: restart nginx
