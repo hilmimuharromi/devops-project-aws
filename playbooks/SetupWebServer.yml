@@ -1,12 +1,12 @@
 ---
-- name: Install Jenkins Agents
+- name: Setup Jenkins Agents
   import_playbook: JenkinsAgents.yml
 
-- name: Install Postgresql
+- name: Setup Postgresql
   import_playbook: Postgresql.yml
 
-- name: Install Docker
+- name: Setup Docker
   import_playbook: Docker.yml
 
-- name: Install NginX
+- name: Setup NginX
   import_playbook: Nginx.yml

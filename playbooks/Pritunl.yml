@@ -4,26 +4,27 @@
   become: yes
   become_user: root
 
-  tasks:
-  - name: Add mongodb repo to sources.list.d
-    lineinfile:
-      path: /etc/apt/sources.list.d/mongodb-org-6.0.list
-      line: "deb https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse"
-      create: true
+  - name: setup repo Mongo
+    shell: "sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list << EOF
+deb https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse
+EOF"
 
-  - name: Add pritunl repo to sources.list.d
-    lineinfile:
-      path: /etc/apt/sources.list.d/pritunl.list
-      line: "deb https://repo.pritunl.com/stable/apt jammy main"
-      create: true
+  - name: setup repo Pritunl
+    shell: "sudo tee /etc/apt/sources.list.d/pritunl.list << EOF
+deb https://repo.pritunl.com/stable/apt jammy main
+EOF" 
 
   - name: Install GNUPG
     shell: sudo apt --assume-yes install gnupg    
 
   - name: download mongo & pritunl
-    shell: "wget -qO- https://www.mongodb.org/static/pgp/server-6.0.asc | sudo tee /etc/apt/trusted.gpg.d/mongodb-org-6.0.asc
-gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys 7568D9BB55FF9E5287D586017AE645C0CF8E292A
-gpg --armor --export 7568D9BB55FF9E5287D586017AE645C0CF8E292A | sudo tee /etc/apt/trusted.gpg.d/pritunl.asc"   
+    shell: "wget -qO- https://www.mongodb.org/static/pgp/server-6.0.asc | sudo tee /etc/apt/trusted.gpg.d/mongodb-org-6.0.asc"   
+
+  - name: gpg key-server
+    shell: "gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys 7568D9BB55FF9E5287D586017AE645C0CF8E292A"   
+
+  - name: gpg export key-server
+    shell: "gpg --armor --export 7568D9BB55FF9E5287D586017AE645C0CF8E292A | sudo tee /etc/apt/trusted.gpg.d/pritunl.asc"   
 
   - name: update
     apt: update_cache=yes   

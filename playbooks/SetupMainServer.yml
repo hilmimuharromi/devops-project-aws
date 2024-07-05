@@ -1,6 +1,6 @@
 ---
-- name: Install Jenkins
+- name: Setup Jenkins
   import_playbook: Jenkins.yml
 
-- name: Install Pritunl
+- name: Setup Pritunl
   import_playbook: Pritunl.yml
