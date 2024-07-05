@@ -4,6 +4,7 @@
   become: yes
   become_user: root
 
+  tasks:
   - name: setup repo Mongo
     shell: "sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list << EOF
 deb https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse
