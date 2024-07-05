@@ -5,15 +5,17 @@
   become_user: root
 
   tasks:
-  - name: setup repo Mongo
-    shell: "sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list << EOF
-deb https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse
-EOF"
+  - name: Add mongo repo to sources.list.d
+    lineinfile:
+      path: /etc/apt/sources.list.d/mongodb-org-6.0.list
+      line: "deb https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse"
+      create: true
 
-  - name: setup repo Pritunl
-    shell: "sudo tee /etc/apt/sources.list.d/pritunl.list << EOF
-deb https://repo.pritunl.com/stable/apt jammy main
-EOF" 
+  - name: Add pritnl repo to sources.list.d
+    lineinfile:
+      path: /etc/apt/sources.list.d/pritunl.list
+      line: "deb https://repo.pritunl.com/stable/apt jammy main"
+      create: true
 
   - name: Install GNUPG
     shell: sudo apt --assume-yes install gnupg    
