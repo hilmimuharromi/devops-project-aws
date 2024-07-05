@@ -1,24 +1,10 @@
 ---
-- name: Setup Web server
+- name: Install Postgresql
   hosts: localhost
   become: yes
   become_user: root
 
   tasks:
-  - name: Update all packages to their latest version
-    apt:
-      name: "*"
-      state: latest
-
-  - name: Install fontconfig
-    shell: apt install fontconfig -y    
-
-  - name: Install java
-    shell: apt install fontconfig openjdk-17-jre -y  
-
-  - name: Checking java version
-    shell: java -version  
-
   - name: Add pgdg repo to sources.list.d
     lineinfile:
       path: /etc/apt/sources.list.d/pgdg.list
@@ -41,16 +27,4 @@
 
   - name: update
     apt: update_cache=yes   
-   
-  - name: Install Nginx
-    apt: name=nginx state=latest
 
-    notify:
-      - restart nginx
-
-  - name: Checking status server
-    shell: echo "setup finsihed"
-
-  handlers:
-  - name: restart nginx
-    service: name=nginx state=reloaded

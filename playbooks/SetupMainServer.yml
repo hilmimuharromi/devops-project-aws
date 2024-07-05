@@ -1,0 +1,6 @@
+---
+- name: Install Jenkins
+  import_playbook: Jenkins.yml
+
+- name: Install Pritunl
+  import_playbook: Pritunl.yml

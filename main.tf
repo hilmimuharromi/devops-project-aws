@@ -11,7 +11,7 @@ resource "aws_security_group" "network-security-group" {
 
   # Define a single ingress rule to allow traffic on all specified ports
   ingress = [
-    for port in [22, 80, 443, 8080] : {
+    for port in [22, 80, 443, 8080, 5432] : {
       description      = "TLS from VPC"
       from_port        = port
       to_port          = port
@@ -43,15 +43,15 @@ resource "aws_instance" "jenkins-instance" {
   instance_type   = var.ubuntu-instance-type
   key_name        = aws_key_pair.deployer.key_name
   vpc_security_group_ids = [aws_security_group.network-security-group.id]
-    user_data              = templatefile("./install_jenkins.sh", {})
+    user_data              = templatefile("./setup_mainserver.sh", {})
 
   tags = {
-    Name = "jenkins-server"
+    Name = "Main-server"
   } 
 }
 
 # Creating Ubuntu EC2 instance
-resource "aws_instance" "webserver-instance" {
+resource "aws_instance" "webserver-instance-staging" {
   ami             = var.ubuntu-ami
   instance_type   = var.ubuntu-instance-type
   key_name        = aws_key_pair.deployer.key_name
@@ -59,6 +59,19 @@ resource "aws_instance" "webserver-instance" {
     user_data              = templatefile("./setup_webserver.sh", {})
 
   tags = {
-    Name = "app-server"
+    Name = "web-server-staging"
+  } 
+}
+
+# Creating Ubuntu EC2 instance
+resource "aws_instance" "webserver-instance-productio" {
+  ami             = var.ubuntu-ami
+  instance_type   = var.ubuntu-instance-type
+  key_name        = aws_key_pair.deployer.key_name
+  vpc_security_group_ids = [aws_security_group.network-security-group.id]
+    user_data              = templatefile("./setup_webserver.sh", {})
+
+  tags = {
+    Name = "web-server-production"
   } 
 }

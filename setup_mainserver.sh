@@ -9,5 +9,5 @@ sudo apt install git -y
 mkdir setup-server && cd setup-server
 pwd
 git clone https://github.com/hilmimuharromi/devops-project-aws.git
-cd devops-project-aws/ansible
-ansible-playbook -i localhost Jenkins.yml
+cd devops-project-aws/playbooks
+ansible-playbook -i localhost SetupMainServer.yml
